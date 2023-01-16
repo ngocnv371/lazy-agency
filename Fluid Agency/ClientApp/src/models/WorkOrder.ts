@@ -6,9 +6,11 @@ export enum WorkOrderStatus {
 }
 
 export interface WorkOrder {
-  id: string | number;
-  address: string;
+  id: string;
   service: string;
-  description: string;
   status: WorkOrderStatus;
+  address: string;
+  description: string;
+  scheduled_ms: number;
+  modified_ms: number;
 }

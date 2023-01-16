@@ -50,10 +50,13 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "update-jeep": "npm install --save @capacitor-community/sqlite@latest --save-dev react-sqlite-hook@latest",
+    "update-capacitor": "npm install --save @capacitor/core@latest --save @capacitor/android@latest --save @capacitor/ios@latest --save-dev @capacitor/cli@latest",
+    "start": "npm run copysqlwasm && react-scripts start",
+    "build": "npm run copysqlwasm && react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "copysqlwasm": "copyfiles -u 3 node_modules/sql.js/dist/sql-wasm.wasm public/assets"
   },
   "eslintConfig": {
     "extends": [
@@ -74,8 +77,11 @@
     ]
   },
   "devDependencies": {
+    "@capacitor-community/sqlite": "^4.6.1-2",
     "@capacitor/cli": "4.6.1",
-    "@types/lodash": "^4.14.191"
+    "@types/lodash": "^4.14.191",
+    "copyfiles": "^2.4.1",
+    "react-sqlite-hook": "^3.1.1"
   },
   "description": "An Ionic project"
 }

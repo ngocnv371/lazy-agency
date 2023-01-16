@@ -1,4 +1,4 @@
 export interface WorkOrdersQuery {
-  fromTime: number;
+  scheduled_ms: number;
   query: string;
 }

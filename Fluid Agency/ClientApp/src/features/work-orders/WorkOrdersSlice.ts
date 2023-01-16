@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
+import { init, queryWorkOrders } from "../../data/schema";
 import { WorkOrder } from "../../models/WorkOrder";
 import { WorkOrdersQuery } from "../../models/WorkOrdersQuery";
-import { fetchWorkOrders } from "./WorkOrdersAPI";
 
 export interface WorkOrdersState {
   items: WorkOrder[];
@@ -16,7 +16,7 @@ const initialState: WorkOrdersState = {
   status: "idle",
   error: null,
   query: {
-    fromTime: 0,
+    scheduled_ms: 0,
     query: ''
   }
 };
@@ -29,9 +29,10 @@ const initialState: WorkOrdersState = {
 export const fetchAsync = createAsyncThunk(
   "workOrders/fetchAsync",
   async (query: WorkOrdersQuery) => {
-    const response = await fetchWorkOrders(query);
+    await init();
+    const items = await queryWorkOrders(query);
     // The value we return becomes the `fulfilled` action payload
-    return response;
+    return items;
   }
 );
 

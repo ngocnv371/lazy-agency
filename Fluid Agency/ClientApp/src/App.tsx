@@ -5,6 +5,7 @@ import {
   IonSplitPane,
   setupIonicReact,
 } from "@ionic/react";
+import { SQLiteHook, useSQLite } from "react-sqlite-hook";
 import { IonReactRouter } from "@ionic/react-router";
 
 /* Core CSS required for Ionic components to work properly */
@@ -27,25 +28,55 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import Menu from "./features/menu/Menu";
 import { WorkOrders } from "./features/work-orders/WorkOrders";
+import { useEffect, useState } from "react";
+import { init } from "./data/schema";
+
+interface JsonListenerInterface {
+  jsonListeners: boolean;
+  setJsonListeners: React.Dispatch<React.SetStateAction<boolean>>;
+}
+interface existingConnInterface {
+  existConn: boolean;
+  setExistConn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// Singleton SQLite Hook
+export let sqlite: SQLiteHook;
+// Existing Connections Store
+export let existingConn: existingConnInterface;
+// Is Json Listeners used
+export let isJsonListeners: JsonListenerInterface;
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu />
-        <IonRouterOutlet id="main">
-          <Route path="/" exact={true}>
-            <Redirect to="/page/active" />
-          </Route>
-          <Route path="/page/:name" exact={true}>
-            <WorkOrders />
-          </Route>
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [existConn, setExistConn] = useState(false);
+  existingConn = { existConn: existConn, setExistConn: setExistConn };
+  sqlite = useSQLite();
+  console.log(`sqlite.isAvailable  ${sqlite.isAvailable}`);
+
+  // init database
+  useEffect(() => {
+    init();
+  }, []);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu />
+          <IonRouterOutlet id="main">
+            <Route path="/" exact={true}>
+              <Redirect to="/page/active" />
+            </Route>
+            <Route path="/page/:name" exact={true}>
+              <WorkOrders />
+            </Route>
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
