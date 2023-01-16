@@ -3,18 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import configureStore from "./store/configureStore";
+import { store } from "./app/store";
 import { Provider } from "react-redux";
-import { createBrowserHistory } from "history";
-
-// Create browser history to use in the Redux store
-const baseUrl = document
-  .getElementsByTagName("base")[0]
-  .getAttribute("href") as string;
-const history = createBrowserHistory({ basename: baseUrl });
-
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const store = configureStore(history);
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
