@@ -30,6 +30,7 @@ import Menu from "./features/menu/Menu";
 import { WorkOrders } from "./features/work-orders/WorkOrders";
 import { useEffect, useState } from "react";
 import { init } from "./data/schema";
+import { Sync } from "./features/sync/Sync";
 
 interface JsonListenerInterface {
   jsonListeners: boolean;
@@ -68,6 +69,9 @@ const App: React.FC = () => {
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/page/active" />
+            </Route>
+            <Route path="/sync" exact={true}>
+              <Sync />
             </Route>
             <Route path="/page/:name" exact={true}>
               <WorkOrders />

@@ -22,6 +22,7 @@ const schema = {
       indexes: [
         { name: "index_status", value: "status" },
         { name: "index_modified", value: "modified_ms DESC" },
+        { name: "index_scheduled", value: "scheduled_ms DESC" },
       ],
     },
   ],

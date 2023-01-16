@@ -6,7 +6,7 @@ export enum WorkOrderStatus {
 }
 
 export interface WorkOrder {
-  id: string;
+  id: number;
   service: string;
   status: WorkOrderStatus;
   address: string;

@@ -17,6 +17,8 @@ import {
   bookmarkOutline,
   mailOutline,
   mailSharp,
+  syncSharp,
+  syncOutline,
 } from "ionicons/icons";
 import "./Menu.css";
 
@@ -39,6 +41,12 @@ const appPages: AppPage[] = [
     url: "/page/Archived",
     iosIcon: archiveOutline,
     mdIcon: archiveSharp,
+  },
+  {
+    title: "Sync",
+    url: "/sync",
+    iosIcon: syncOutline,
+    mdIcon: syncSharp,
   },
 ];
 
