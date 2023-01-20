@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, ThunkDispatch } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import workOrdersReducer from '../features/work-orders/WorkOrdersSlice';
 import syncReducer from '../features/sync/SyncSlice';
@@ -8,7 +8,7 @@ export const store = configureStore({
     sync: syncReducer,
     workOrders: workOrdersReducer,
     counter: counterReducer,
-  }
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

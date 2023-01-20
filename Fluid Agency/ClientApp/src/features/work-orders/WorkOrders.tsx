@@ -14,6 +14,7 @@ import {
   IonLoading,
   IonMenuButton,
   IonPage,
+  IonSearchbar,
   IonSpinner,
   IonTitle,
   IonToolbar,
@@ -24,15 +25,11 @@ import WorkOrderCard from "./WorkOrderCard";
 import { Error } from "./Error";
 import { Query } from "./Query";
 import {
-  fetchAsync,
-  selectError,
   selectItems,
-  selectStatus,
 } from "./WorkOrdersSlice";
 
 export function WorkOrders() {
   const workOrders = useAppSelector(selectItems);
-  const status = useAppSelector(selectStatus);
 
   return (
     <IonPage>
@@ -43,6 +40,7 @@ export function WorkOrders() {
           </IonButtons>
           <IonTitle>Work Orders</IonTitle>
         </IonToolbar>
+        <Query />
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
@@ -51,12 +49,6 @@ export function WorkOrders() {
           </IonToolbar>
         </IonHeader>
         <Error />
-        <Query />
-        {status === "loading" && (
-          <div className="container">
-            <IonSpinner></IonSpinner>
-          </div>
-        )}
         {workOrders.map((wo) => (
           <WorkOrderCard key={wo.id} {...wo} />
         ))}

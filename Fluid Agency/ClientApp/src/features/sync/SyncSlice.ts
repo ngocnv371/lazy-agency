@@ -31,10 +31,11 @@ const initialState: SyncState = {
 export const syncWorkOrdersAsync = createAsyncThunk(
   "sync/syncWorkOrdersAsync",
   async (_, api) => {
+    console.info(`[syncWorkOrdersAsync] start`)
     await init();
     const items = await fetchModifiedWorkOrders(0);
-    // The value we return becomes the `fulfilled` action payload
-    return items;
+    console.debug(`[syncWorkOrdersAsync] found ${items.length} items`)
+    // override everything
   }
 );
 
@@ -56,7 +57,6 @@ export const syncSlice = createSlice({
       })
       .addCase(syncWorkOrdersAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.items = action.payload;
       })
       .addCase(syncWorkOrdersAsync.rejected, (state, action) => {
         state.status = "failed";
