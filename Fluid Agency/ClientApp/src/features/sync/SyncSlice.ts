@@ -5,7 +5,6 @@ import {
   SerializedError,
 } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
-import { init, queryWorkOrders } from "../../data/schema";
 import { WorkOrder } from "../../models/WorkOrder";
 import { fetchModifiedWorkOrders } from "./SyncAPI";
 
@@ -32,7 +31,6 @@ export const syncWorkOrdersAsync = createAsyncThunk(
   "sync/syncWorkOrdersAsync",
   async (_, api) => {
     console.info(`[syncWorkOrdersAsync] start`)
-    await init();
     const items = await fetchModifiedWorkOrders(0);
     console.debug(`[syncWorkOrdersAsync] found ${items.length} items`)
     // override everything

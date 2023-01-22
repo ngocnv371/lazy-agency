@@ -55,10 +55,12 @@ type DatabaseSchema = typeof schema;
 type TableSchema = typeof schema.tables[0];
 
 let isInitating = false;
-export async function init() {
+export async function initDatabase() {
   if (isInitating) {
-    throw new Error(`Database: is still initializing`);
+    console.error(`Database: is still initializing`);
+    return;
   }
+  isInitating = true;
   const existed = await sqlite.isDatabase(schema.database);
   if (!existed.result) {
     console.log(`Database: check exist ${schema.database}`);
@@ -74,14 +76,7 @@ export async function init() {
     if (imported.changes?.changes === -1) {
       throw new Error(`Database: failed to import JSON schema`);
     }
-    isInitating = true;
-  }
-}
-
-function generateUpdateStatement(wo: WorkOrder) {
-  return {
-    statement: Object.keys(wo).map(k => `${k} = ?`).join(','),
-    values: Object.values(wo)
+    isInitating = false;
   }
 }
 

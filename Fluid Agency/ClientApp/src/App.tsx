@@ -29,7 +29,7 @@ import "./theme/variables.css";
 import Menu from "./features/menu/Menu";
 import { WorkOrders } from "./features/work-orders/WorkOrders";
 import { useEffect, useState } from "react";
-import { init } from "./data/schema";
+import { initDatabase } from "./data/schema";
 import { Sync } from "./features/sync/Sync";
 
 interface JsonListenerInterface {
@@ -58,7 +58,8 @@ const App: React.FC = () => {
 
   // init database
   useEffect(() => {
-    init();
+    console.log(`App first init`);
+    initDatabase();
   }, []);
 
   return (

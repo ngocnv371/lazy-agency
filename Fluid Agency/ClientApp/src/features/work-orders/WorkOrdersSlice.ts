@@ -5,7 +5,7 @@ import {
   SerializedError,
 } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
-import { init, queryWorkOrders } from "../../data/schema";
+import { queryWorkOrders } from "../../data/schema";
 import { WorkOrder } from "../../models/WorkOrder";
 import { WorkOrdersQuery } from "../../models/WorkOrdersQuery";
 
@@ -34,8 +34,6 @@ const initialState: WorkOrdersState = {
 export const fetchAsync = createAsyncThunk(
   "workOrders/fetchAsync",
   async (query: WorkOrdersQuery) => {
-    console.log(`workOrders/fetchAsync`);
-    await init();
     const items = await queryWorkOrders(query);
     // The value we return becomes the `fulfilled` action payload
     return items;
