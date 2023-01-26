@@ -1,27 +1,31 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import { setupSqlite } from "./sqlite";
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
-import configureStore from './store/configureStore';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+window.addEventListener("DOMContentLoaded", async () => {
+  await setupSqlite();
+  const container = document.getElementById("root");
+  const root = createRoot(container!);
+  root.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  );
 
-// Create browser history to use in the Redux store
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
-const history = createBrowserHistory({ basename: baseUrl });
+  // If you want your app to work offline and load faster, you can change
+  // unregister() to register() below. Note this comes with some pitfalls.
+  // Learn more about service workers: https://cra.link/PWA
+  serviceWorkerRegistration.unregister();
 
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const store = configureStore(history);
-
-ReactDOM.render(
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <App />
-        </ConnectedRouter>
-    </Provider>,
-    document.getElementById('root'));
-
-registerServiceWorker();
+  // If you want to start measuring performance in your app, pass a function
+  // to log results (for example: reportWebVitals(console.log))
+  // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  reportWebVitals();
+});
